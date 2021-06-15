@@ -1,7 +1,15 @@
 
+let highScore=0;
+
+
 function setup() {
     // создаем канвас
     createCanvas(800, 500);
+    if (localStorage.getItem('birdScore')==null)
+    {
+        localStorage.setItem('birdScore',0);
+    }
+    highScore = localStorage.getItem('birdScore');
 }
 function randomInteger(min, max) {
     // получить случайное число от (min-0.5) до (max+0.5)
@@ -46,17 +54,27 @@ function draw() {
         fill(255  , 255 , 255);
         textSize(50);
         text("Game over! Press R to restart.",70, yMax/2);
+//  проверка localStorage на null и сравнение с текущим score
+        if (localStorage.getItem('birdScore')<score ){ 
+            localStorage.setItem('birdScore', score);
+        }
     }
-    
-        viewScore();
+     viewScore();
    
 }
 function viewScore(){
+// показываем счет, после прохождения первого препятствия
     if (score)
     {stroke(50, 50, 50);
     fill(50, 50, 50);
     textSize(25);
-    text("Your score is: "+score,30,100);}
+    text("Your score is: "+score,30,150);}
+// постоянно выводим лучший результат
+    stroke(50, 50, 50);
+    fill(50, 50, 50);
+    textSize(25);
+    text("Best score is: "+ highScore,30,100);
+    
 }
 // создание препятствий
 function drawRect(xX, xR) {
